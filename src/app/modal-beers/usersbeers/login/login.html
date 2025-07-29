@@ -1,0 +1,44 @@
+<div class="cart">
+    <div class="cart-modal">
+        <div class="cart-modal-content">
+        <button class="close-button-top-right" (click)="close()">X</button>
+            <h2>Iniciar Sesión</h2>
+            @if(_userlogged) {
+                 <div>
+                    <button class="place-close-button" type="button" (click)="CerrarSession()">Cerrar Session</button>
+                </div>
+            }
+            @else { 
+                    <mat-form-field>
+                            <mat-label>Correo</mat-label>
+                                <input matInput type="email" [(ngModel)]="_email"  name="username" required />
+                                @if(emailControl.hasError('required') || !_email){
+                                    <mat-error>
+                                        El correo es obligatorio.
+                                    </mat-error>
+                                }
+                                @else if(emailControl.hasError('email')) {
+                                    <mat-error>
+                                        Ingresa un correo válido.
+                                    </mat-error>
+                                }
+                            </mat-form-field>
+                        <mat-form-field>
+                            <mat-label>Constraseña</mat-label>
+                                <input matInput type="password" [(ngModel)]="_password" name="password" required />
+                                @if(emailControl.hasError('required') || !_password){
+                                    <mat-error>
+                                        La constraseña es obligatorio.
+                                    </mat-error>
+                                }
+                        </mat-form-field>
+                        <div>
+                            <button class="place-order-button" type="button" (click)="login()">Entrar</button>
+                        </div>
+                        <div>
+                            <button class="place-order-button" type="button" (click)="register()">Registrarse</button>
+                        </div>
+                }
+            </div>
+    </div>
+</div>

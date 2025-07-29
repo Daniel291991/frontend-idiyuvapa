@@ -1,0 +1,43 @@
+<div class="menu-container">
+
+    @for (beer of beers; track beer) {
+      <div class="beer-margen">
+        <div class="beer-section"
+          (click)="handleSelectBeer(beer)"
+          [ngStyle]="{ 'background-image': 'url(' + beer.image + ')' }">
+        </div>
+      </div>
+    }
+  
+
+  @if (selectedBeer) {
+    <div class="modal-cervezas">
+      <div class="modal-cervezas-content">
+        <h2 mat-dialog-title>{{ selectedBeer.name }}</h2>
+        <img [src]="selectedBeer.image" [alt]="selectedBeer.name" class="beer-image"/>
+        <p>{{ selectedBeer.description }}</p>
+        <p><strong>Stock:</strong> {{ selectedBeer.stock }}</p>
+        <p><strong>Calidad:</strong> {{ selectedBeer.quality }}</p>
+        <div class="modal-cervezas-buttons">
+          @for (pack of selectedBeer.packOptions; track pack) {
+            <div class="pack-option">
+              <img [src]="selectedBeer.packImages[pack]" [alt]="pack" class="button-image" />
+              <p>
+                <strong>Precio:</strong>
+                ${{ selectedBeer.price * (+pack.split(' ')[0] || 0) }}
+              </p>
+              <button
+                mat-raised-button
+                [ngStyle]="{ backgroundColor: selectedBeer.color, color: '#fff' }"
+                (click)="handleSelectPack(pack, selectedBeer)"
+              >
+                {{ pack }}
+              </button>
+            </div>
+          }
+        </div>
+        <button mat-stroked-button color="warn" class="close-button" (click)="handleCloseModal()">Cerrar</button>
+    </div>
+    </div>
+  }
+</div>

@@ -1,0 +1,73 @@
+<!-- Modal Popup: User Details & Order History -->
+ <div class="cart-user">
+        <button class="close-button-top-right" (click)="close()">X</button>
+        <div class="user-modal-header">
+                    <h2>Detalles del Usuario</h2>
+                </div>
+            <mat-sidenav #sidenav mode="over" position="start" opened>
+                <mat-tab-group>
+                    <mat-tab label="Datos Cliente">
+                        <form class="user-details-form" >
+                            <mat-form-field appearance="fill" >
+                                <mat-label>Nombres</mat-label>
+                                <input matInput [(ngModel)]="_beerUser.contacts[0].nombre" name="nombre">
+                            </mat-form-field>
+                            <mat-form-field appearance="fill" >
+                                <mat-label>Apellidos</mat-label>
+                                <input matInput [(ngModel)]="_beerUser.contacts[0].apellidos" name="nombre">
+                            </mat-form-field>
+                            <mat-form-field appearance="fill">
+                                <mat-label>Email</mat-label>
+                                <input matInput [(ngModel)]="_beerUser.contacts[0].correo" name="correo">
+                            </mat-form-field>
+                            <mat-form-field appearance="fill" >
+                                <mat-label>Teléfono</mat-label>
+                                <input matInput [(ngModel)]="_beerUser.contacts[0].celular" name="celular">
+                            </mat-form-field>
+                            <mat-form-field appearance="fill" >
+                                <mat-label>Dirección de envio</mat-label>
+                                <input matInput [(ngModel)]="_beerUser.contacts[0].direccion" name="direccion">
+                            </mat-form-field>
+                        </form>
+                    </mat-tab>
+                    <mat-tab label="Historial de Pedidos">
+                        @if(_beerUser?.pedido?.length) {
+                            <mat-list>
+                            @for(pedido of _beerUser?.pedido; track $index) {
+
+                            }
+                            </mat-list>
+                        }
+                        @else {
+                            <p>No hay pedidos registrados.</p>
+                        }
+                    </mat-tab>
+                    <mat-tab label="Adminitrar Cuenta">
+                         <form class="user-details-form" >
+                            <mat-form-field appearance="fill" >
+                                <mat-label>Email</mat-label>
+                                <input matInput [(ngModel)]="_beerUser.session.email" readonly name="email" >
+                            </mat-form-field>
+                            <mat-form-field appearance="fill">
+                                <mat-label>Contraseña</mat-label>
+                                <input matInput type="password" [(ngModel)]="_beerUser.session.pass" readonly name="pass" >
+                            </mat-form-field>
+                            @if(!_columnDisable) {
+                             <button class="place-order-button-pass" type="button" (click)="_columnDisable = true" >Cambiar Contraseña</button>
+                            }
+                            @if(_columnDisable) {
+                                <mat-form-field appearance="fill" >
+                                <mat-label>Contraseña Nueva </mat-label>
+                                <input matInput type="password" name="celular" >
+                            </mat-form-field>
+                            }
+                        </form>
+                        
+                    </mat-tab>
+                </mat-tab-group>
+            </mat-sidenav>
+             <div class="botones">
+                <button class="place-order-button" type="button" (click)="Update()">Modificar</button>
+                <button class="place-close-button" type="button" (click)="CerrarSession()" >Cerrar Session</button>
+             </div>
+</div>

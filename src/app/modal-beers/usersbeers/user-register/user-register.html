@@ -1,0 +1,66 @@
+<div class="cart-user-register">
+  <button class="close-button-top-right" (click)="close()">X</button>
+  <div class="user-modal-header">
+    <h2>Registro de Usuario</h2>
+  </div>
+  <mat-sidenav mode="side" opened>
+    <mat-tab-group [selectedIndex]="selectedTabIndex">
+      <mat-tab label="Datos Cliente">
+        <form class="user-details-form" #formDatosCliente="ngForm">
+          <mat-form-field appearance="fill" style="width: 100%;">
+            <mat-label>RUT</mat-label>
+            <input matInput [(ngModel)]="rut" name="rut" type="text" (ngModelChange)="FormatedRut($event)" (focusout)="validarRut(rut)" required>
+          </mat-form-field>
+          <mat-form-field appearance="fill" style="width: 100%;">
+            <mat-label>Nombre</mat-label>
+            <input matInput [(ngModel)]="nombre" name="nombre" type="text" required>
+          </mat-form-field>
+          <mat-form-field appearance="fill" style="width: 100%;">
+            <mat-label>Apellido</mat-label>
+            <input matInput [(ngModel)]="apellido" name="apellido" type="text" required>
+          </mat-form-field>
+          <mat-form-field appearance="fill" style="width: 100%;">
+            <mat-label>Email</mat-label>
+            <input matInput [(ngModel)]="email" name="email" type="email" required>
+           @if(InputControl.hasError('required') || !email){
+              <mat-error>
+                El correo es obligatorio.
+              </mat-error>
+          }
+          @else if(InputControl.hasError('email')) {
+              <mat-error>
+                Ingresa un correo válido.
+              </mat-error>
+          }
+          </mat-form-field>
+          <mat-form-field appearance="fill" style="width: 100%;">
+            <mat-label>Teléfono</mat-label>
+            <input matInput [(ngModel)]="telefono" name="telefono" type="tel" required>
+          </mat-form-field>
+          <mat-form-field appearance="fill" style="width: 100%;">
+            <mat-label>Dirección de entrega</mat-label>
+            <input matInput [(ngModel)]="direccion" name="direccion" type="text" required>
+          </mat-form-field>
+          <button class="place-order-button" type="button" [disabled]="!formDatosCliente.valid" (click)="irAlSiguienteTab(formDatosCliente)">Continuar</button>
+        </form>
+      </mat-tab>
+      <mat-tab label="Datos Session" [disabled]="!formDatosCliente.valid">
+        <form class="user-details-form" #formDatosSession="ngForm">
+          <mat-form-field appearance="fill">
+            <mat-label>Email</mat-label>
+            <input matInput [(ngModel)]="email" readonly name="email">
+          </mat-form-field>
+          <mat-form-field appearance="fill">
+            <mat-label>Contraseña</mat-label>
+            <input matInput type="password" required [(ngModel)]="Pass" (ngModelChange)="ValidatePasswordEqual()" name="pass">
+          </mat-form-field>
+          <mat-form-field appearance="fill">
+            <mat-label>Repetir Contraseña</mat-label>
+            <input matInput type="password" required [(ngModel)]="Pass2" (ngModelChange)="ValidatePasswordEqual()" name="pass2">
+          </mat-form-field>
+        </form>
+        <button class="place-order-button" type="button" [disabled]="!formDatosSession.valid" (click)="RegistrarUserBeer(formDatosSession)">Registrarse</button>
+      </mat-tab>
+    </mat-tab-group>
+  </mat-sidenav>
+</div>

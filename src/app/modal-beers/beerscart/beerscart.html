@@ -1,0 +1,78 @@
+<div class="cart">
+  <div class="cart-modal">
+    <div class="cart-modal-content">
+      <button class="close-button-top-right" (click)="handleClose()">X</button>
+      <h3>Carrito de Compras</h3>
+      <ul>
+        @for (item of cart; track item) {
+          <li class="cart-item">
+            <img [src]="item.image" [alt]="item.name" class="cart-item-image" />
+            <div class="cart-item-details">
+              <p><strong>{{ item.name }}</strong></p>
+              <p><strong>Cant pack: {{ item.cant || 1 }}</strong></p>
+              <p>Pack: {{ item.pack }}</p>
+              <p>Precio x Detalle: ${{ item.price }}</p>
+            </div>
+            <button class="remove-button" (click)="removeFromCart.emit({ guid: item.id.toString(), pack: item.pack })">
+              X
+            </button>
+          </li>
+        }
+      </ul>
+      <p class="cart-total">Botellas: {{ totalBottles }}</p>
+      <p class="cart-Sub-total"><strong>Sub-Total:</strong> ${{ subTotal }}</p>
+      <p class="cart-Descuento"><strong>Descto:</strong> ${{ discount }}</p>
+      <p class="cart-total"><strong>Total:</strong> ${{ total }}</p>
+
+      @if (!showCheckout) {
+        <button class="checkout-button" (click)="handleCheckout()">
+          Finalizar Compra
+        </button>
+      }
+
+      @if (showCheckout) {
+        <form class="checkout-form" (ngSubmit)="handlePlaceOrder()" #form="ngForm">
+          <h4>Datos de Contacto</h4>
+            <mat-form-field>
+              <mat-label>Nombre Completo</mat-label>
+                <input matInput [(ngModel)]="contactName" name="contactName" required/>
+              </mat-form-field>
+            <mat-form-field>
+              <mat-label>Correo electrónico</mat-label>
+              <input matInput type="email" placeholder="Correo electrónico" [(ngModel)]="contactEmail" name="contactEmail" required email>
+              @if(form.submitted && !contactEmail) {
+                <mat-error>
+                  El correo es obligatorio.
+                </mat-error>
+              }
+              @else if(form.submitted && contactEmail && form.controls['contactEmail'].invalid) {
+                <mat-error>
+                  Ingresa un correo válido.
+                </mat-error>
+              }
+            </mat-form-field>
+            <mat-form-field>
+              <mat-label>Dirección de Envío</mat-label>
+              <input matInput [(ngModel)]="contactAddress" name="contactAddress" required/>
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Teléfono</mat-label>
+                <input matInput type="tel" [(ngModel)]="contactPhone" name="contactPhone" required/>
+            </mat-form-field>
+          
+          <button type="submit" [disabled]="form.invalid" class="place-order-button">Realizar Pedido</button>
+        </form>
+      }
+    </div>
+  </div>
+</div>
+<!-- Popup de confirmación 
+@if (showConfirmation) {
+  <app-confirmation
+    [orderDetails]="orderDetails"
+    [subtotal]="subTotal"
+    [descto]="discount"
+    [total]="total"
+    (onClose)="handleClearCart()"
+  ></app-confirmation>
+}-->

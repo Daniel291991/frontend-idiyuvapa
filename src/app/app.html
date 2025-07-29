@@ -1,0 +1,4 @@
+
+<app-navbar ></app-navbar>
+<app-beer-loading [show]="(beerLoadingService.loading$ | async) ?? false"></app-beer-loading>
+<router-outlet />

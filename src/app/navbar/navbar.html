@@ -1,0 +1,35 @@
+<header class="header"> 
+    <mat-toolbar class="navbar">
+     
+      <div class="cart-icon">
+      <a (click)="OpenPage('go-home')">
+        <img src="image/favicon-32x32.png" alt="Logo Izquierda" class="logo" />
+      </a>
+      </div>
+       <ul class="menu">
+         @if(_cargo !== 'Administrador') {
+          <li (click)="OpenPage('go-about-us')" style="cursor:pointer">
+            Quiénes Somos
+          </li>
+          <li (click)="OpenPage('go-beers')" style="cursor:pointer">
+            Cervezas
+          </li>
+        }
+        @else{
+          <li (click)="OpenPage('go-beersOrder')" style="cursor:pointer">
+          Pedidos
+        </li>
+        }
+      </ul>
+      <div class="navbar-icons">
+        <div class="cart-icon" (click)="OpenPage('go-beercart')">
+          <img src="image/cerveza.png" alt="Logo Derecha" class="logo" />
+          <span class="cart-count">{{cartCount}}</span>
+        </div>
+        <div class="cart-icon">
+              <img src="/image/user_beer.png" alt="Usuario" width="32" height="32" (click)="OpenPage('go-users')"/>
+          </div>
+        </div>
+    </mat-toolbar>
+ </header>
+    
